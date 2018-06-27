@@ -22,6 +22,7 @@ class App extends Component {
       localStorage.setItem('currentPage', this.state.currentPage)
     }
     this.updateStateToLocal(localStorage.getItem('currentPage'));
+    this.updateSavedStateFromDB();
   }
   updateStateToLocal = (page)=>{
     this.setState({currentPage: page})
@@ -48,8 +49,21 @@ class App extends Component {
         console.log(err);
       })
     }
+    updateSavedStateFromDB = () => {
+      API.getAllArticles().then(data=>{
+        console.log(data);
+        this.setState({saved: data.data})
+        console.log(this.state);
+      })
+    }
     handleSave = (article)=>{
+
       API.saveArticle(article)
+      .then(data=>{
+        this.updateSavedStateFromDB();
+      }).catch(err=>{
+        console.log(err);
+      })
       // this.setState({...this.state, saved: saved});
 
     }
