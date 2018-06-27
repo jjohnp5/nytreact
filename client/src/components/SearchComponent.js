@@ -1,25 +1,30 @@
 import React, {Component} from 'react';
+import CardHeader from './CardHeader';
 
 
 
 class SearchComponent extends Component {
-    constructor(props){
-        super(props);
-    }
+
 
     render(){
         return (
-            <div className="row">
-                {
+            
                     this.props.articles.map(art=>{
-                        return <div className="col-12" key={art._id}>
-                            <h1>{art.headline.main}</h1>
-
+                        return (
+                            
+                        <div className="card results" key={art._id}>
+                            <CardHeader web_url={art.web_url} headline={art.headline.main} byline={art.byline} />
+                            <div className="card-body">
+                                <p>{art.snippet}</p>
+                                <button className="btn btn-info" onClick={()=>{this.props.handleSave(art);}}>Save Article</button>
+                            </div>
+                            
                         </div>
+                        )
                     })
 
-                }
-            </div>
+          
+            
         )
     }
 }

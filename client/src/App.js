@@ -1,24 +1,78 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
+
 import "./App.css";
+import Jumbotron from './components/Jumbotron';
+import Nav from './components/Nav';
+import NoMatch from './components/NoMatch';
 import Articles from './pages/Articles';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import SavedComponent from './components/SavedComponent';
+import runNYTQuery from './utils/nytAPI';
+import API from './utils/proxyAPI';
 
 class App extends Component {
 
-  
+  state = {
+    searched: [],
+    saved: [],
+    currentPage: "Home"
+  }
+  componentWillMount(){
+    if(!localStorage.getItem('currentPage')){
+      localStorage.setItem('currentPage', this.state.currentPage)
+    }
+    this.updateStateToLocal(localStorage.getItem('currentPage'));
+  }
+  updateStateToLocal = (page)=>{
+    this.setState({currentPage: page})
+  }
+
+    updateCurrentPage = (page)=>{
+      localStorage.setItem('currentPage', page)
+      this.updateStateToLocal(localStorage.getItem('currentPage'))
+    }
+
+    handleSubmit = (term, beginYear, endYear) => {
+      if(!beginYear){
+          beginYear = 2018;
+      }
+      if(!endYear){
+          endYear = 2018
+      }
+      runNYTQuery(term, beginYear, endYear).then(data=>{
+          console.log(data.data)
+          console.log(this.state);
+        this.setState({...this.state, searched: data.data})
+        console.log(this.state);
+      }).catch(err=>{
+        console.log(err);
+      })
+    }
+    handleSave = (article)=>{
+      API.saveArticle(article)
+      // this.setState({...this.state, saved: saved});
+
+    }
 
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <Articles  />
-      </div>
+      
+    <Router>
+            <div className="container">
+                <Jumbotron />
+                <Nav currentPage={this.state.currentPage} updateCurrentPage={this.updateCurrentPage}/>
+                <Switch>
+                <Route exact path="/" render={(props)=>(
+                  <Articles {...props} articles={this.state.searched} handleSubmit={this.handleSubmit} handleSave={this.handleSave} />
+                )} />
+                <Route exact path="/saved" render={(props)=>(
+                  <SavedComponent {...props} saved={this.state.saved} />
+                )}  />
+                <Route component={NoMatch} />
+                </Switch>
+            </div>
+            </Router>
+    
     );
   }
 }
