@@ -7,7 +7,8 @@ export default {
             title: article.headline.main,
             author: article.byline ? article.byline.original : "Public Article",
             snippet: article.snippet,
-            url: article.web_url
+            url: article.web_url,
+            date: article.pub_date
         })
     },
     getAllArticles: ()=>{

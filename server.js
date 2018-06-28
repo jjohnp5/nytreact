@@ -26,9 +26,10 @@ app.get('/nyt/search/:term/:start/:end', (req,res)=>{
     axios.get(queryURL, {
       params: {
         'api-key': '705deda7b6f44826a9a3253452ebd858',
-        q: req.params.term,
+        fq: req.params.term,
         begin_date: `${req.params.start}0101`,
-        end_date: `${req.params.end}1231`
+        end_date: `${req.params.end}1231`,
+        fl:"_id,web_url,pub_date,headline,byline,snippet"
       }
     })
     .then(data=>{
