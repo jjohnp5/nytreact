@@ -13,5 +13,9 @@ export default {
     },
     getAllArticles: ()=>{
         return axios.get('/articles')
+    },
+    removeArticle: (id)=>{
+        return axios.delete('/articles/'+id)
     }
+
 }

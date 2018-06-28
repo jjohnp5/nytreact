@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 
 class SavedComponent extends Component{
 
-    getData = () =>{
-        
-    }
+    
     render(){
         console.log(this.props)
         return (
@@ -20,6 +18,7 @@ class SavedComponent extends Component{
                             <h5>{art.author}</h5>
                             <p>{art.snippet}</p>
                             <a href={art.web_url}><button className="btn btn-info">Go to Article</button></a>
+                            <button className="btn btn-danger" onClick={()=>{this.props.handleDeleteArticle(art._id)}}>Delete Article</button>
                             </div>
                         </div>
                     )

@@ -27,7 +27,7 @@ module.exports = {
         
     },
     remove: function(req,res){
-        db.findById({_id: req.params.id})
+        db.findById(req.params.id)
         .then(data => {
             data.remove()
         }).then(data=>{

@@ -5,23 +5,27 @@ body{
 .results{
   margin-top: 15px;
 }
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.results button{
+  margin-left: 15px;
+}
+.jumbotron{
+  min-height: 200px;
+}
+.jumbo{
+  animation: App-logo-spin infinite 5s linear;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-intro {
-  font-size: large;
-}
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  0% { transform: rotate(0deg);
+  font-size: 1em;
+  color: white; }
+  50% { transform: rotate(360deg);
+  font-size: 1.5em;
+  color: gray; }
+  100%{
+    transform: rotate(720deg);
+  font-size: 1em;
+  color: white;
+  }
 }

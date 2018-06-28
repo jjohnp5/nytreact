@@ -41,19 +41,17 @@ class App extends Component {
           endYear = 2018
       }
       runNYTQuery(term, beginYear, endYear).then(data=>{
-          console.log(data.data)
-          console.log(this.state);
         this.setState({...this.state, searched: data.data})
-        console.log(this.state);
+        
       }).catch(err=>{
         console.log(err);
       })
     }
     updateSavedStateFromDB = () => {
       API.getAllArticles().then(data=>{
-        console.log(data);
+        
         this.setState({saved: data.data})
-        console.log(this.state);
+        
       })
     }
     handleSave = (article)=>{
@@ -67,8 +65,16 @@ class App extends Component {
       // this.setState({...this.state, saved: saved});
 
     }
+    handleDeleteArticle = (id) => {
+      API.removeArticle(id).then(()=>{
+        this.updateSavedStateFromDB();
+      }).catch(err=>{
+        console.log(err);
+      })
+    }
 
   render() {
+    console.log(this.state);
     return (
       
     <Router>
@@ -80,7 +86,7 @@ class App extends Component {
                   <Articles {...props} articles={this.state.searched} handleSubmit={this.handleSubmit} handleSave={this.handleSave} />
                 )} />
                 <Route exact path="/saved" render={(props)=>(
-                  <SavedComponent {...props} saved={this.state.saved} />
+                  <SavedComponent {...props} saved={this.state.saved} handleDeleteArticle={this.handleDeleteArticle} />
                 )}  />
                 <Route component={NoMatch} />
                 </Switch>

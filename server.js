@@ -42,6 +42,7 @@ app.get('/nyt/search/:term/:start/:end', (req,res)=>{
 })
 app.get('/articles', articleController.findAll)
 app.post('/articles', articleController.create)
+app.delete('/articles/:id', articleController.remove)
 // Send every other request to the React app
 // Define any API routes before this runs
 app.get("*", (req, res) => {
