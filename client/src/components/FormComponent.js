@@ -15,7 +15,7 @@ class FormComponent extends Component {
         return (
             <div className="card ">
                 <div className="card-header bg-info">
-                    <h2 className="text-white"><strong><i className="fa fa-newspaper-o"></i></strong> Search Articles</h2>
+                    <h5 className="text-white"><i className="fa fa-list-alt"></i> Search Articles</h5>
                 </div>
                 <div className="card-body">
                 <form>

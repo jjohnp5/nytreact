@@ -6,6 +6,9 @@ const app = express();
 const axios = require('axios');
 const mongoose = require('mongoose')
 const articleController = require('./controllers/articleController');
+const server = require('http').Server(app);
+const io = require('socket.io')(server);;
+
 
 // Define middleware here
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -49,6 +52,16 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
-app.listen(PORT, () => {
+io.on('connection', (socket)=>{
+  socket.on('delete', function(data){
+    console.log(data);
+    io.emit('deleted', data);
+  })
+  
+})
+
+
+
+server.listen(PORT, () => {
   console.log(`🌎 ==> Server now on port ${PORT}!`);
 });

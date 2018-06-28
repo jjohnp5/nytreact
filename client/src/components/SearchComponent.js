@@ -9,7 +9,7 @@ class SearchComponent extends Component {
     render(){
         return (
             
-                    this.props.articles.map(art=>{
+                    this.props.articles.searched.map(art=>{
                         return (
                             
                         <div className="card results" key={art._id}>

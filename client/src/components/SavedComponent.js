@@ -7,7 +7,7 @@ class SavedComponent extends Component{
         console.log(this.props)
         return (
             <React.Fragment>
-                {this.props.saved.map((art,i)=>{
+                {this.props.saved.saved.map((art,i)=>{
                     return (
                         <div className="card results" key={i}>
                             <div className="card-header bg-secondary">
